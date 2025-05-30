@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinket AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for chat area */
+        .chat-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #8b5cf6, #6366f1);
+            border-radius: 3px;
+        }
+        /* Keyframe animations */
+        @keyframes flicker {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        .shadow-glow {
+            box-shadow: 0 0 10px #6366f1, 0 0 20px #a855f7;
+        }
+        .shadow-glow-large {
+            box-shadow: 0 0 15px #6366f1, 0 0 30px #a855f7;
+        }
+        .animate-flicker {
+            animation: flicker 2s infinite;
+        }
+        /* Prose styling for markdown content */
+        .prose {
+            color: white;
+        }
+        .prose strong {
+            color: #a855f7;
+            font-weight: bold;
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1rem;
+        }
+        .prose li {
+            margin-bottom: 0.25rem;
+        }
+        .prose h3 {
+            color: #6366f1;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-900 text-white">
+    <div id="app-root">
+        <header class="p-6 flex justify-between items-center border-b border-purple-700 shadow-lg">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-gray-800 p-[2px] flex items-center justify-center shadow-glow animate-pulse">
+                    <img src="https://i.ibb.co/7JwR020z/sinket-ai-logo.png" alt="Sinket AI Logo" class="w-full h-full object-cover rounded-full" />
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+                    Sinket AI
+                </h1>
+            </div>
+            <nav class="space-x-6 hidden md:flex">
+                <button id="home-nav-button" class="hover:text-purple-300 transition">Home</button>
+                <button id="chat-nav-button" class="hover:text-purple-300 transition">Chat</button>
+            </nav>
+            <button id="header-action-button" class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium shadow-lg transition-transform transform hover:scale-105 active:scale-95">
+                Launch Chat
+            </button>
+        </header>
+
+        <main id="main-content" class="relative overflow-hidden">
+            <section id="home-view" class="relative px-6 py-20 md:py-32 flex flex-col items-center justify-center text-center">
+                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://source.unsplash.com/random/1600x900/?ai'); opacity: 0.1;"></div>
+                <div class="relative z-10 max-w-4xl mx-auto">
+                    <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-flicker">
+                            Meet Sinket AI.
+                        </span>
+                        <span class="block mt-2 text-xl md:text-2xl opacity-80 max-w-xl mx-auto">
+                            The next-generation AI assistant built for developers, creators, and thinkers.
+                        </span>
+                    </h2>
+                    <p class="text-lg mt-4 opacity-90">
+                        A Powerful LLM Model For Everything
+                    </p>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8 my-10">
+                        <div class="w-24 h-24 rounded-full bg-gray-800 p-[2px] flex items-center justify-center shadow-glow animate-pulse">
+                            <img src="https://i.ibb.co/7JwR020z/sinket-ai-logo.png" alt="Sinket AI Logo" class="w-full h-full object-contain rounded-full" />
+                        </div>
+                        <div class="w-24 h-24 rounded-full bg-gray-800 p-[2px] flex items-center justify-center shadow-glow animate-pulse">
+                            <img src="https://i.ibb.co/VWBH7fZd/sinket-ai-avatar-1.png" alt="Sinket AI Avatar" class="w-full h-full object-contain rounded-full" />
+                        </div>
+                    </div>
+                    <button id="home-start-chat-button" class="mt-8 inline-block px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 text-white font-semibold shadow-xl transform transition hover:scale-105 active:scale-95">
+                        Start Chatting Now
+                    </button>
+                    <section id="features" class="w-full px-6 py-20 bg-gray-900/50 backdrop-blur-sm mt-16">
+                        <div id="feature-cards-container" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                            </div>
+                    </section>
+                    <section class="px-6 py-24 text-center">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
+                            Ready to Experience the Future?
+                        </h3>
+                        <p class="text-lg opacity-80 mb-8">
+                            Try Sinket AI today - talk, write, code, create, and explore with the power of next-gen AI.
+                        </p>
+                        <button id="home-cta-button" class="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white font-semibold shadow-xl transform transition hover:scale-105 active:scale-95">
+                            Launch Chat
+                        </button>
+                    </section>
+                </div>
+            </section>
+
+            <div id="chat-view" class="hidden flex flex-col h-[calc(100vh-72px)]">
+                <section id="chat-area" class="flex-1 p-4 overflow-y-auto space-y-4 chat-scrollbar">
+                    <div id="empty-chat-message" class="flex flex-col items-center justify-center h-full text-center opacity-70">
+                        <div class="mb-4 w-24 h-24 rounded-full bg-gray-800 p-[3px] flex items-center justify-center shadow-glow-large animate-pulse">
+                            <img src="https://i.ibb.co/7JwR020z/sinket-ai-logo.png" alt="Sinket AI Logo" class="w-full h-full object-cover rounded-full" />
+                        </div>
+                        <p class="text-xl font-semibold">Ask me anything!</p>
+                        <p class="text-sm mt-2">Type your query and hit send to get started.</p>
+                    </div>
+                    <div id="typing-indicator" class="hidden flex mr-auto bg-gray-800 rounded-xl p-3 w-24">
+                        <span class="animate-pulse">Typing...</span>
+                    </div>
+                    <div id="messages-end-ref"></div>
+                </section>
+                <footer class="p-4 bg-gray-900 border-t border-purple-700 shadow-inner">
+                    <div class="flex gap-2">
+                        <input
+                            type="text"
+                            id="chat-input"
+                            placeholder="Type your message..."
+                            class="flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all duration-300"
+                        />
+                        <button
+                            id="send-message-button"
+                            class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium hover:from-purple-500 hover:to-blue-500 active:scale-95 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Send
+                        </button>
+                    </div>
+                </footer>
+            </div>
+        </main>
+
+        <footer class="border-t border-purple-800 p-6 text-center text-sm opacity-70">
+            <p>&copy; <span id="current-year"></span> Sinket AI. All rights reserved.</p>
+            <p class="mt-2">Made with ❤️ for AI lovers around the world.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Global state variables
+        let view = "home"; // 'home' or 'chat'
+        let input = "";
+        let chatHistory = [];
+        let isLoading = false;
+
+        // DOM element references
+        const homeView = document.getElementById('home-view');
+        const chatView = document.getElementById('chat-view');
+        const headerActionButton = document.getElementById('header-action-button');
+        const homeNavButton = document.getElementById('home-nav-button');
+        const chatNavButton = document.getElementById('chat-nav-button');
+        const chatArea = document.getElementById('chat-area');
+        const chatInput = document.getElementById('chat-input');
+        const sendMessageButton = document.getElementById('send-message-button');
+        const emptyChatMessage = document.getElementById('empty-chat-message');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const messagesEndRef = document.getElementById('messages-end-ref');
+        const featureCardsContainer = document.getElementById('feature-cards-container');
+
+        // Function to scroll to the bottom of the chat history
+        const scrollToBottom = () => {
+            messagesEndRef.scrollIntoView({ behavior: "smooth" });
+        };
+
+        // Markdown Renderer Function
+        const MarkdownRenderer = (text) => {
+            const lines = text.split("\n");
+            let htmlContent = '';
+            let inList = false;
+
+            lines.forEach((line) => {
+                line = line.trim();
+
+                if (/^\*\*.*\*\*/.test(line)) {
+                    // Bold text
+                    if (inList) { htmlContent += '</ul>'; inList = false; }
+                    htmlContent += `<p>${line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")}</p>`;
+                } else if (/^- /.test(line) || /^\* /.test(line)) {
+                    // List item
+                    const content = line.replace(/^[-*] /, "");
+                    if (!inList) { htmlContent += '<ul>'; inList = true; }
+                    htmlContent += `<li>${content}</li>`;
+                } else if (line.startsWith("### ")) {
+                    // H3 heading
+                    if (inList) { htmlContent += '</ul>'; inList = false; }
+                    htmlContent += `<h3>${line.replace("### ", "")}</h3>`;
+                } else if (line) {
+                    // Paragraph
+                    if (inList) { htmlContent += '</ul>'; inList = false; }
+                    htmlContent += `<p>${line}</p>`;
+                }
+            });
+
+            if (inList) { htmlContent += '</ul>'; } // Close any open list
+
+            return htmlContent;
+        };
+
+        // Feature Card Component HTML
+        const getFeatureCardHtml = (title, description) => {
+            return `
+                <div class="bg-gray-800/50 backdrop-blur-md p-6 rounded-xl border border-gray-700 hover:border-purple-500 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl">
+                    <h4 class="text-xl font-bold mb-3">${title}</h4>
+                    <p class="opacity-80">${description}</p>
+                </div>
+            `;
+        };
+
+        // Function to update chat messages in the UI
+        const updateChatMessages = () => {
+            // Clear current messages, then re-add to avoid duplicates if this function is called repeatedly
+            // for the same chatHistory state. A more efficient way would be to only append new messages.
+            // For now, let's clear and re-render for simplicity and correctness with current logic.
+            // We'll append only the *new* message to avoid full re-render on each message.
+
+            // Hide empty message if there are messages
+            if (chatHistory.length > 0) {
+                emptyChatMessage.classList.add('hidden');
+            } else {
+                emptyChatMessage.classList.remove('hidden');
+            }
+
+            // Clear existing messages before appending new ones to ensure correct order and avoid duplicates
+            // This is a simplification. For very long chats, a virtualized list would be better.
+            // For now, we'll clear and re-add.
+            const existingMessages = chatArea.querySelectorAll('.chat-message-item');
+            existingMessages.forEach(msg => msg.remove());
+
+
+            chatHistory.forEach((msg, index) => {
+                const messageClass = msg.role === "user"
+                    ? "ml-auto bg-gradient-to-r from-blue-600 to-indigo-700 shadow-md"
+                    : "mr-auto bg-gradient-to-r from-gray-800 to-gray-700 shadow-md";
+                const senderText = msg.role === "user" ? "You" : "Sinket AI";
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-message-item flex flex-col max-w-[80%] rounded-xl p-3 ${messageClass}`;
+                messageDiv.innerHTML = `
+                    <span class="text-xs opacity-70">${senderText}</span>
+                    <div class="mt-1 text-sm prose prose-invert max-w-none">
+                        ${MarkdownRenderer(msg.content)}
+                    </div>
+                `;
+                chatArea.insertBefore(messageDiv, typingIndicator); // Insert before typing indicator
+            });
+
+            // Handle typing indicator visibility
+            if (isLoading) {
+                typingIndicator.classList.remove('hidden');
+            } else {
+                typingIndicator.classList.add('hidden');
+            }
+
+            // Update input field value
+            chatInput.value = input;
+            sendMessageButton.disabled = isLoading;
+
+            scrollToBottom();
+        };
+
+        // Function to handle sending messages
+        const handleSendMessage = async () => {
+            if (!input.trim()) return;
+
+            const userMessage = { role: "user", content: input };
+            chatHistory = [...chatHistory, userMessage];
+            input = ""; // Clear input immediately
+            updateChatMessages(); // Update UI to show user message and clear input
+
+            isLoading = true;
+            updateChatMessages(); // Show typing indicator
+
+            try {
+                const payload = {
+                    model: "deepseek/deepseek-r1-0528:free",
+                    messages: chatHistory.map(msg => ({ role: msg.role, content: msg.content })),
+                };
+
+                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        // IMPORTANT: Replace with your actual API key or handle securely
+                        Authorization: "Bearer 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",
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await response.json();
+                const assistantMessageContent = data.choices?.[0]?.message?.content || "Error: No response received.";
+                const assistantMessage = { role: "assistant", content: assistantMessageContent };
+                chatHistory = [...chatHistory, assistantMessage];
+            } catch (error) {
+                console.error("API request error:", error);
+                chatHistory = [
+                    ...chatHistory,
+                    { role: "assistant", content: "Something went wrong. Please try again later." },
+                ];
+            } finally {
+                isLoading = false;
+                updateChatMessages(); // Update UI with assistant message or error, and hide typing indicator
+            }
+        };
+
+        // Function to switch views
+        const setView = (newView) => {
+            view = newView;
+            if (view === "home") {
+                homeView.classList.remove('hidden');
+                chatView.classList.add('hidden');
+                headerActionButton.className = "px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium shadow-lg transition-transform transform hover:scale-105 active:scale-95";
+                headerActionButton.textContent = "Launch Chat";
+                headerActionButton.onclick = () => setView("chat");
+            } else { // view === "chat"
+                homeView.classList.add('hidden');
+                chatView.classList.remove('hidden');
+                headerActionButton.className = "px-4 py-2 rounded-lg bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-medium shadow-lg transition-transform transform hover:scale-105 active:scale-95";
+                headerActionButton.textContent = "Back to Home";
+                headerActionButton.onclick = () => setView("home");
+                updateChatMessages(); // Ensure chat view is up-to-date when switching to it
+            }
+        };
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Render feature cards once
+            featureCardsContainer.innerHTML = `
+                ${getFeatureCardHtml("Smart & Fast", "Powered by advanced LLMs, Sinket AI delivers lightning-fast responses with high accuracy and context-aware understanding.")}
+                ${getFeatureCardHtml("Customizable UI", "Dark mode, themes, fonts tailor the experience to your style and comfort.")}
+                ${getFeatureCardHtml("Secure & Private", "Your data stays safe with end-to-end encryption and no third-party tracking.")}
+            `;
+
+            // Attach global event listeners
+            homeNavButton.onclick = () => setView("home");
+            chatNavButton.onclick = () => setView("chat");
+            document.getElementById('home-start-chat-button').onclick = () => setView("chat");
+            document.getElementById('home-cta-button').onclick = () => setView("chat");
+
+            chatInput.oninput = (e) => { input = e.target.value; };
+            chatInput.onkeydown = (e) => {
+                if (e.key === "Enter") {
+                    handleSendMessage();
+                }
+            };
+            sendMessageButton.onclick = handleSendMessage;
+
+            // Set initial view
+            setView("home");
+        });
+    </script>
+</body>
+</html>
+
